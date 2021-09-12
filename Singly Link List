@@ -1,0 +1,219 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+	public:
+		int data;
+		Node* next;
+		Node(int val){
+			data = val;
+			next = NULL;
+		}
+};
+class SLL
+{
+	private:
+		Node *Head,*tail;
+	public:
+		SLL()
+		{
+			Head = NULL;
+			tail = NULL;
+		}
+		void menu();
+		void Add_Node(int);
+		void Add_To_Head(int);
+		void Del_From_Head();
+		void Add_To_Tail(int);
+		void Del_From_Tail();
+		void Display();
+		bool Search(int);
+		void Insert_At(int,int);
+		void Delete_At(int);
+};
+void SLL :: Add_Node(int a)
+{
+	Node* temp=new Node(a);
+	temp->data=a;
+	temp->next=NULL;
+	if(Head==NULL)
+	{
+		Head=temp;
+		tail=temp;
+	}
+	else{
+		tail->next=temp;
+		tail=tail->next;
+	}
+}
+void SLL :: Add_To_Head(int item)
+{
+	Node* temp = new Node(item);
+	temp->next = Head;
+	Head = temp;
+}
+void SLL :: Del_From_Head()
+{
+	Node* temp = Head;
+	Head = temp->next;
+	delete temp;
+}
+void SLL :: Add_To_Tail(int item)
+{
+	Node* temp =  Head;
+	while(temp->next!=NULL)
+	{
+		temp=temp->next;
+	}
+	Node* n = new Node(item);
+	temp->next=n;
+	n->next=NULL;
+}
+void SLL :: Del_From_Tail()
+{
+	Node* temp =  Head;
+	while((temp->next)->next !=NULL)
+	{
+		temp=temp->next;
+	}
+	temp->next = NULL;
+}
+void SLL :: Display()
+{
+	Node* temp = Head;
+	while(temp != NULL)
+	{
+		cout<<temp->data <<"->";
+		temp = temp->next;
+	}
+	cout<<"NULL"<<endl;
+}
+bool SLL :: Search(int ele)
+{
+	Node* temp = Head;
+	int count = 1;
+	while(temp != NULL)
+	{
+		if(temp->data == ele)
+		{return true;}
+		temp = temp->next;
+	}
+	return false;
+}
+void SLL :: Insert_At(int pos,int val)
+{
+	Node* newnode = new Node(val);
+	Node* temp = Head;
+	int count = 1;
+	while(temp != NULL)
+	{
+		if((count+1) == pos)
+		{
+			Node* temp2 = temp;
+			newnode->next = (temp2->next);
+			temp->next=newnode;
+		}
+		temp = temp->next;
+		count+=1;
+	}
+}
+void SLL :: Delete_At(int pos)
+{
+	Node* temp= Head;
+	int count = 1;
+	while(temp != NULL)
+	{
+		if((count+1)==pos)
+		{
+			Node* temp2 = temp->next;
+			temp->next=temp2->next;
+			delete temp2;
+		}
+		temp = temp->next;
+		count++;
+	}
+}
+void SLL :: menu()
+{
+	cout<<endl<<"\t\tEnter your choice\t\t"<<endl;
+	cout<<"\t1. Add to Head"<<endl;
+	cout<<"\t2. Add to Tail"<<endl;
+	cout<<"\t3. Delete from Head"<<endl;
+	cout<<"\t4. Delete from Tail"<<endl;
+	cout<<"\t5. Search in the Linked List"<<endl;
+	cout<<"\t6. Insert in the Linked List"<<endl;
+	cout<<"\t7. Delete in the Linked List"<<endl;
+	cout<<"\t0. To Exit"<<endl;
+}
+int main()
+{
+	cout<<"\t\tProgram Started :"<<endl;
+	cout<<"Enter the elements of the Linked List(enter 911 to stop) : "<<endl;
+	SLL a;
+	int elem,choise;
+	while(elem != 911)
+	{
+		cin>>elem;
+		if(elem!=911)
+		{	a.Add_Node(elem);}
+	}
+	cout<<endl<<"Entered Linked List : ";
+	a.Display();
+	a.menu();
+	while(choise!=0)
+	{
+	cout<<endl<<"Enter your choice : ";
+	cin>>choise;
+	switch(choise)
+	{
+		case 0:
+			break;
+		case 1:
+			int i;
+			cout<<endl<<"Enter the element : ";
+			cin>>i;
+			a.Add_To_Head(i);
+			break;
+		case 2:
+			int i2;
+			cout<<endl<<"Enter the element : ";
+			cin>>i2;
+			a.Add_To_Tail(i2);
+			break;
+		case 3:
+			a.Del_From_Head();
+			break;
+		case 4:
+			a.Del_From_Tail();
+			break;
+		case 5:
+			int i3;
+			cout<<endl<<"Enter the element : ";
+			cin>>i3;
+			if(a.Search(i3))
+				cout<<"Element is present in the Singly Linked List";
+			else
+				cout<<"Element is not present in the Singly Linked List";
+			break;
+		case 6:
+			int i4,j;
+			cout<<endl<<"Enter the position : ";
+			cin>>i4;
+			cout<<endl<<"Enter the element : ";
+			cin>>j;
+			a.Insert_At(i4,j);
+			break;
+		case 7:
+			int i5;
+			cout<<endl<<"Enter the position : ";
+			cin>>i5;
+			a.Delete_At(i5);
+			break;
+		default:
+			cout<<"Enter a valid choice";
+	}
+	if(choise!=0){
+	cout<<endl<<"After Operations"<<endl;
+	a.Display();
+}}
+}
